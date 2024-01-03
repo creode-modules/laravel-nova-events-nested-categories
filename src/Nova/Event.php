@@ -2,6 +2,7 @@
 
 namespace Creode\LaravelNovaEventsNestedCategories\Nova;
 
+use Illuminate\Database\Eloquent\Builder;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
@@ -13,16 +14,15 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
-use Illuminate\Database\Eloquent\Builder;
 
-class NewEvent extends Resource
+class Event extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var class-string<\App\Models\User>
      */
-    public static $model = \Creode\LaravelNovaEventsNestedCategories\Entities\NewEvent::class;
+    public static $model = \Creode\LaravelNovaEventsNestedCategories\Entities\Event::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -37,7 +37,8 @@ class NewEvent extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'title',
+        'id',
+        'title',
     ];
 
     public static $group = 'Events';
@@ -45,7 +46,7 @@ class NewEvent extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function fields(NovaRequest $request)
@@ -72,7 +73,7 @@ class NewEvent extends Resource
 
             Text::make('Venue'),
             Markdown::make('Address'),
-            BelongsTo::make('Category', 'category', \Creode\LaravelNovaEventsNestedCategories\Nova\NewEventCategory::class)
+            BelongsTo::make('Category', 'category', \Creode\LaravelNovaEventsNestedCategories\Nova\EventCategory::class)
                 ->relatableQueryUsing(function (NovaRequest $request, Builder $query) {
                     return $query->where('parent_id', '!=', null);
                 })
@@ -81,7 +82,11 @@ class NewEvent extends Resource
                 ->onlyOnForms(),
 
             Stack::make('Category', [ // This field in not shown on forms
-                BelongsTo::make('Category', 'category', \Creode\LaravelNovaEventsNestedCategories\Nova\NewEventCategory::class)
+                BelongsTo::make(
+                    'Category',
+                    'category',
+                    \Creode\LaravelNovaEventsNestedCategories\Nova\EventCategory::class
+                )
                     ->searchable()
                     ->withSubtitles(),
 
@@ -99,7 +104,7 @@ class NewEvent extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function cards(NovaRequest $request)
@@ -110,7 +115,7 @@ class NewEvent extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function filters(NovaRequest $request)
@@ -121,7 +126,7 @@ class NewEvent extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function lenses(NovaRequest $request)
@@ -132,7 +137,7 @@ class NewEvent extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function actions(NovaRequest $request)
