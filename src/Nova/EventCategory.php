@@ -4,20 +4,19 @@ namespace Creode\LaravelNovaEventsNestedCategories\Nova;
 
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource;
 
-class NewEventCategory extends Resource
+class EventCategory extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var class-string<\App\Models\User>
      */
-    public static $model = \Creode\LaravelNovaEventsNestedCategories\Entities\NewEventCategory::class;
+    public static $model = \Creode\LaravelNovaEventsNestedCategories\Entities\EventCategory::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -32,7 +31,8 @@ class NewEventCategory extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name',
+        'id',
+        'name',
     ];
 
     public static $group = 'Events';
@@ -40,7 +40,7 @@ class NewEventCategory extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function fields(NovaRequest $request)
@@ -51,7 +51,11 @@ class NewEventCategory extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
             Slug::make('Slug')->from('Name'),
-            BelongsTo::make('Parent Category', 'parent', NewEventCategory::class)
+            BelongsTo::make(
+                'Parent Category',
+                'parent',
+                \Creode\LaravelNovaEventsNestedCategories\Nova\EventCategory::class
+            )
                 ->nullable(),
 
         ];
@@ -60,7 +64,7 @@ class NewEventCategory extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function cards(NovaRequest $request)
@@ -71,7 +75,7 @@ class NewEventCategory extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function filters(NovaRequest $request)
@@ -82,7 +86,7 @@ class NewEventCategory extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function lenses(NovaRequest $request)
@@ -93,7 +97,7 @@ class NewEventCategory extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function actions(NovaRequest $request)

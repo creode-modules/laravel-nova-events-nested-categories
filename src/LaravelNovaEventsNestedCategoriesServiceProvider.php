@@ -18,8 +18,8 @@ class LaravelNovaEventsNestedCategoriesServiceProvider extends PackageServicePro
     public function registerResources()
     {
         Nova::resources([
-            \Creode\LaravelNovaEventsNestedCategories\Nova\NewEvent::class,
-            \Creode\LaravelNovaEventsNestedCategories\Nova\NewEventCategory::class,
+            \Creode\LaravelNovaEventsNestedCategories\Nova\Event::class,
+            \Creode\LaravelNovaEventsNestedCategories\Nova\EventCategory::class,
         ]);
     }
 

@@ -2,9 +2,9 @@
 
 namespace Creode\LaravelNovaEventsNestedCategories\Http\Controllers;
 
+use Creode\LaravelNovaEventsNestedCategories\Entities\EventCategory;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
-use Creode\LaravelNovaEventsNestedCategories\Entities\NewEventCategory;
 
 class EventsNestedCategoriesController extends Controller
 {
@@ -15,30 +15,11 @@ class EventsNestedCategoriesController extends Controller
      */
     public function index()
     {
-//        $categories = NewEventCategory::has('subCategories')->with('subCategories.events')->get();
-        $categories = NewEventCategory::with('subCategories')
-            ->whereHas('subCategories')
-            ->get()
-            ->transform(function ($category) {
-                return [$category->name => $category->subCategories->pluck('name', 'id')];
-            })
-            ->groupBy('category.name')
-            ->toArray();
-//
-//        $countries = Country::with('provinces')->get()->transform(function ($country) {
-//            return [$country->name => $country->provinces->pluck('name', 'id')];
-//        });
-
+        $categories = EventCategory::has('subCategories')->with('subCategories.events')->get();
         return view('nova-events-nested-categories::index', compact('categories'));
     }
 
-    /**
-     * Show the specified resource.
-     *
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
+    public function show()
     {
         return view('nova-events-nested-categories::show');
     }
