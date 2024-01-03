@@ -1,6 +1,6 @@
 {
     "name": "creode/laravel-nova-events-nested-categories",
-    "description": "A Laravel Nova tool.",
+    "description": "A Laravel Nova package that provides an Events resource that supports nested categories",
     "keywords": [
         "laravel",
         "nova"
