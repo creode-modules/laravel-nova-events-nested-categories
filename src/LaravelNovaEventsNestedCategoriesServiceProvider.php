@@ -33,6 +33,8 @@ class LaravelNovaEventsNestedCategoriesServiceProvider extends PackageServicePro
                 [
                     '2023_08_23_130212_create_event_categories_table',
                     '2023_08_23_131350_create_events_table',
+                    '2024_01_03_161950_rename_new_events_table_to_events',
+                    '2024_01_03_162125_rename_new_event_categories_table_to_event_categories',
                 ]
             )
             ->runsMigrations();
