@@ -31,8 +31,8 @@ class LaravelNovaEventsNestedCategoriesServiceProvider extends PackageServicePro
             ->hasRoutes('web')
             ->hasMigrations(
                 [
-                    '2023_08_23_130212_create_new_event_categories_table',
-                    '2023_08_23_131350_create_new_events_table',
+                    '2023_08_23_130212_create_event_categories_table',
+                    '2023_08_23_131350_create_events_table',
                 ]
             )
             ->runsMigrations();
